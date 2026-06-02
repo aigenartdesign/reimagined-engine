@@ -470,6 +470,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 .d-cards-grid.compact .d-st-btn { font-size:11px; padding:8px 2px; }
 .d-cards-grid.compact .d-grund { font-size:11px; padding:4px 6px; }
 
+/* Suchleiste */
+#searchBar { 
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+  border-radius:8px; padding:6px 12px; color:#fff; font-size:13px;
+  width:140px;
+}
+#searchBar::placeholder { color:rgba(255,255,255,.5); }
+#searchBar:focus { outline:none; border-color:rgba(255,255,255,.4); background:rgba(255,255,255,.18); }
+
+.view-toggle {
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+  color:#fff; width:34px; height:34px; border-radius:8px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  font-size:16px; transition:all .2s;
+}
+.view-toggle:hover { background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.35); }
+.view-toggle.active { background:rgba(255,255,255,.25); border-color:rgba(255,255,255,.4); }
+
 @media print{
   #hdr,#mainScroll .nav-grid,#mainScroll .nav-full,#mainScroll .evt-card,#bar{display:none!important}
   .sub-hdr,#bar{display:none!important}
@@ -616,11 +634,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 
 <script>
 const PLAN={
-  1:{kz:'Mo',az:'8:00–15:00', soll:6.30,pause:'–',   team:false},
-  2:{kz:'Di',az:'10:00–16:00',soll:6.00,pause:'–',   team:false},
-  3:{kz:'Mi',az:'10:15–16:00',soll:5.45,pause:'–',   team:false},
-  4:{kz:'Do',az:'10:00–16:00',soll:6.45,pause:'–',   team:true },
-  5:{kz:'Fr',az:'8:00–13:20', soll:5.00,pause:'–',   team:false},
+  1:{kz:'Mo',az:'7:30–15:00', soll:7.00,pause:'0:30',team:false},
+  2:{kz:'Di',az:'10:00–14:20',soll:4.20,pause:'–',   team:false},
+  3:{kz:'Mi',az:'8:00–13:30', soll:5.30,pause:'–',   team:false},
+  4:{kz:'Do',az:'8:00–16:00', soll:8.30,pause:'–',   team:true },
+  5:{kz:'Fr',az:'10:00–15:00',soll:5.00,pause:'–',   team:false},
 };
 const WSOLL=31,TDEF=1,VDEF=1,STEP=0.15;
 const MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
@@ -639,7 +657,7 @@ function wSoll(days){const full=days.length===5||[1,2,3,4,5].every(dw=>days.some
 function wIst(days){let s=0;days.forEach(({dow,key})=>s+=cIst(dd(key,dow)));return Math.round(s*100)/100;}
 function mCalc(){const w=weeksOf(S.year,S.month);let ts=0,ti=0,tv=0;Object.entries(w).forEach(([k,days])=>{ts+=wSoll(days);ti+=wIst(days);tv+=S.vorb[k]!==undefined?S.vorb[k]:VDEF;});ts=Math.round(ts*100)/100;ti=Math.round(ti*100)/100;tv=Math.round(tv*100)/100;return{ts,ti,tv,ub:S.ubertrag,neu:Math.round((ti+tv-ts+S.ubertrag)*100)/100};}
 
-function sk(){return`sb6_${S.year}_${S.month}`;}
+function sk(){return`sz6_${S.year}_${S.month}`;}
 function save(){localStorage.setItem(sk(),JSON.stringify({data:S.data,vorb:S.vorb,ubertrag:S.ubertrag}));}
 function load(){const r=localStorage.getItem(sk());if(r){const p=JSON.parse(r);S.data=p.data||{};S.vorb=p.vorb||{};S.ubertrag=p.ubertrag||0;}else{S.data={};S.vorb={};S.ubertrag=0;}}
 
@@ -670,50 +688,6 @@ function closeView(){
     ms.style.display='block';
     document.getElementById('bar').classList.remove('show');
   },{once:true});
-}
-
-function toggleViewMode(){
-  S.viewMode=S.viewMode==='compact'?'normal':'compact';
-  localStorage.setItem('sz_viewMode',S.viewMode);
-  const btn=document.querySelector('.view-toggle');
-  if(btn) btn.classList.toggle('active',S.viewMode==='compact');
-  if(S.view==='uebersicht') renderSub();
-}
-
-function jumpToDate(){
-  const d=document.getElementById('searchBar').value;
-  if(!d) return;
-  // Format: DD.MM oder DD.MM.YYYY
-  const parts=d.split('.');
-  if(parts.length<2) return;
-  let day=parseInt(parts[0]),month=parseInt(parts[1]),year=parts[2]?parseInt(parts[2]):S.year;
-  if(day<1||day>31||month<1||month>12) return;
-  // Navigiere zu dem Monat wenn nötig
-  if(month!==S.month||year!==S.year){
-    S.month=month; S.year=year;
-    updateMonthLabel();
-  }
-  // Öffne die Übersicht View (wie openView macht)
-  S.view='uebersicht';
-  const sv=document.getElementById('subView');
-  const ms=document.getElementById('mainScroll');
-  document.getElementById('bar').classList.add('show');
-  document.getElementById('subTitle').textContent='Tage';
-  document.querySelector('.sub-title-icon').textContent='📋';
-  document.getElementById('searchBar').value='';
-  renderSub();
-  ms.style.display='none';
-  sv.style.display='block';
-  sv.classList.remove('closing');
-  sv.classList.add('opening');
-  sv.addEventListener('animationend',()=>sv.classList.remove('opening'),{once:true});
-  
-  // Springe zum Tag
-  setTimeout(()=>{
-    const key=dKey(year,month,day);
-    const el=document.querySelector(`[data-key="${key}"]`);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
-  },150);
 }
 
 function rToday(){
@@ -822,7 +796,10 @@ function rUebersicht(){
           <span class="d-h-show${st==='keine_schule'?' neg':''}">${fH(D.ist)}h</span>
           <button class="s-btn p" onclick="adjD('${key}',${dow},1)"${st?' disabled':''}>+</button>
         </div>
-        ${!st?`<div class="d-diff-row ${diff>0?'pos':diff<0?'neg':'exact'}">${diff>0?'+'+fH(diff)+'h über Soll':diff<0?fH(diff)+'h unter Soll':'✓ genau'}</div>`:''}
+        ${!st?`<div class="d-diff-row ${diff>0?'pos':diff<0?'neg':'exact'}" ${diff!==0?`onclick="resetD('${key}',${dow})" style="cursor:pointer" title="Auf Soll zurücksetzen"`:''}>
+          ${diff>0?'+'+fH(diff)+'h über Soll':diff<0?fH(diff)+'h unter Soll':'✓ genau'}
+          ${diff!==0?'<span style="float:right;opacity:.6">↺</span>':''}
+        </div>`:''}
         ${p.team?`<div class="d-team"><span class="d-team-lbl">💬 Teambesprechung</span>
           <button class="s-btn m" onclick="adjT('${key}',${dow},-1)">−</button>
           <span class="d-team-val">${fH(D.team)}h</span>
@@ -837,25 +814,19 @@ function rUebersicht(){
       </div></div>`;
   });
   h+=`</div>`;
-  // Zusammenfassung - mit Vorbereitung
-  const weeks=weeksOf(S.year,S.month);
-  let totalVorb=0;
-  Object.entries(weeks).forEach(([wk,days])=>{
-    totalVorb+=S.vorb[wk]!==undefined?S.vorb[wk]:VDEF;
-  });
-  totalVorb=Math.round(totalVorb*100)/100;
-  const totalDiff=Math.round((totalIst+totalVorb-totalSoll)*100)/100;
+  // Zusammenfassung - Nutze mCalc für konsistente Berechnungen
+  const{ts,ti,tv,neu}=mCalc();
   h+=`<div class="d-summary">
     <h4>📊 Bisherige Bilanz – ${MN[S.month-1]}</h4>
     <div class="d-sum-grid">
-      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(totalSoll)}h</div></div>
-      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(totalIst)}h</div></div>
-      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${totalDiff>0?'pos':totalDiff<0?'neg':''}">${totalDiff>=0?'+':''}${fH(totalDiff)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(ts)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(ti)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${neu>0?'pos':neu<0?'neg':''}">${neu>=0?'+':''}${fH(neu)}h</div></div>
     </div>
   </div>`;
-  const weeks2=weeksOf(S.year,S.month);
   h+=`<div class="vorb-section"><h3>📝 Vorbereitungszeit</h3>`;
-  Object.entries(weeks2).forEach(([wk,days])=>{
+  const weeks=weeksOf(S.year,S.month);
+  Object.entries(weeks).forEach(([wk,days])=>{
     const v=S.vorb[wk]!==undefined?S.vorb[wk]:VDEF;
     const kw=wk.split('-W')[1],d1=days[0].d,d2=days[days.length-1].d;
     h+=`<div class="vorb-row"><span class="vorb-lbl">KW ${kw} (${d1}.–${d2}.)</span>
@@ -897,7 +868,9 @@ function rKompakt(){
         <div class="k-d"><span class="k-kz">${p.kz}</span><span class="k-dt">${d}.${String(S.month).padStart(2,'0')}.</span></div>
         <span class="k-az">${p.az}</span>
         ${D?`<div class="k-ctrl" style="display:flex;align-items:center;gap:4px">${st
-          ?st==='keine_schule'?`<span class="k-ist" style="color:#c62828">−${fH(Math.abs(D.ist))}</span>`:`<span class="k-stat">${st==='frei'?'Frei':'Krank'}</span>`
+          ?st==='keine_schule'
+            ?`<span class="k-ist" style="color:#c62828">−${fH(Math.abs(D.ist))}</span>`
+            :`<span class="k-stat">${st==='frei'?'Frei':'Krank'}</span>`
           :`<button class="s-btn m" onclick="adjD('${key}',${dow},-1)">−</button><span class="k-ist">${fH(D.ist)}</span><button class="s-btn p" onclick="adjD('${key}',${dow},1)">+</button>${diffBadge}`
         }</div>`:`<div class="k-ctrl"><span class="k-ist">–</span></div>`}
       </div>`;
@@ -918,20 +891,14 @@ function rKompakt(){
       </div></div>`;
     h+=wh+'</div>';
   });
-  // Gesamtbilanz aller angezeigten Wochen
-  const allDays=wdays(S.year,S.month).filter(({key})=>{
-    const dt=new Date(S.year,S.month-1,parseInt(key.split('-')[2]));
-    return dt<=new Date();
-  });
-  let gs=0,gi=0;
-  allDays.forEach(({dow,key})=>{const D=dd(key,dow);if(D&&!D.status){const p=PLAN[dow];gs+=p.soll+(p.team?(D.team||0):0);gi+=D.ist;}});
-  const gd=Math.round((gi-gs)*100)/100;
+  // Gesamtbilanz - Nutze mCalc für Konsistenz
+  const{ts,ti,tv,neu}=mCalc();
   h+=`<div class="d-summary">
     <h4>📊 Bisherige Bilanz – ${MN[S.month-1]}</h4>
     <div class="d-sum-grid">
-      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(gs)}h</div></div>
-      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(gi)}h</div></div>
-      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${gd>0?'pos':gd<0?'neg':''}">${gd>=0?'+':''}${fH(gd)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(ts)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(ti)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${neu>0?'pos':neu<0?'neg':''}">${neu>=0?'+':''}${fH(neu)}h</div></div>
     </div>
   </div>`;
   return h;
@@ -959,8 +926,8 @@ function rMonat(){
   </div>`;
 }
 
-function resetD(k,dw){const p=PLAN[dw];if(!S.data[k])S.data[k]={};S.data[k].ist=p.soll+(p.team?(S.data[k].team||TDEF):0);save();rToday();if(S.view!=='home')renderSub();}
 function adjD(k,dw,d){const D=dd(k,dw);if(!S.data[k])S.data[k]={...D};S.data[k].ist=step(S.data[k].ist!==undefined?S.data[k].ist:D.ist,d);save();rToday();if(S.view!=='home')renderSub();}
+function resetD(k,dw){const p=PLAN[dw];if(!S.data[k])S.data[k]={};S.data[k].ist=p.soll+(p.team?(S.data[k].team||TDEF):0);save();rToday();if(S.view!=='home')renderSub();}
 function adjT(k,dw,d){const D=dd(k,dw);if(!S.data[k])S.data[k]={...D};const nt=step(S.data[k].team!==undefined?S.data[k].team:TDEF,d);S.data[k].team=nt;S.data[k].ist=Math.round((PLAN[dw].soll+nt)*100)/100;save();rToday();if(S.view!=='home')renderSub();}
 function togS(k,dw,st){const D=dd(k,dw);if(!S.data[k])S.data[k]={...D};S.data[k].status=S.data[k].status===st?'':st;save();rToday();if(S.view!=='home')renderSub();}
 function setI(k,dw,v){const n=parseFloat(String(v).replace(',','.'));if(!isNaN(n)){const D=dd(k,dw);if(!S.data[k])S.data[k]={...D};S.data[k].ist=Math.round(n*100)/100;save();renderSub();}}
@@ -1018,14 +985,14 @@ const DEF_EVTS=[
   {id:'s8',date:'2026-07-20',name:'🌞 1. Ferientag Sommerferien'},
 ].concat(genBirthdayEvents());
 function loadEvts(){
-  const r=localStorage.getItem('sb_evts');
+  const r=localStorage.getItem('sz_evts');
   const stored=r?JSON.parse(r):DEF_EVTS;
   // Geburtstags-Events automatisch hinzufügen (falls nicht vorhanden)
   const bdays=genBirthdayEvents();
   const merged=[...stored.filter(e=>e.type!=='birthday'),...bdays];
   return merged;
 }
-function saveEvts(e){localStorage.setItem('sb_evts',JSON.stringify(e));}
+function saveEvts(e){localStorage.setItem('sz_evts',JSON.stringify(e));}
 function rEvtWidget(){
   const evts=loadEvts();
   const today=new Date();today.setHours(0,0,0,0);
@@ -1066,8 +1033,8 @@ document.getElementById('nextBtn').onclick=()=>{S.month++;if(S.month>12){S.month
 document.getElementById('saveBtn').onclick=()=>{save();const b=document.getElementById('saveBtn');b.textContent='✅ Gespeichert';b.classList.add('done');setTimeout(()=>{b.textContent='💾 Speichern';b.classList.remove('done');},2000);};
 document.getElementById('shareBtn').onclick=()=>{save();openShareModal();};
 
-function loadPlan(){const r=localStorage.getItem('sb_plan');return r?JSON.parse(r):PLAN;}
-function savePlanData(newPlan){localStorage.setItem('sb_plan',JSON.stringify(newPlan));}
+function loadPlan(){const r=localStorage.getItem('sz_plan');return r?JSON.parse(r):PLAN;}
+function savePlanData(newPlan){localStorage.setItem('sz_plan',JSON.stringify(newPlan));}
 
 // Lade gespeicherten Plan beim Start
 Object.assign(PLAN,loadPlan());
@@ -1224,6 +1191,51 @@ function buildShareText(){
   lines.push(`SOLL: ${fH(ts)}h | IST: ${fH(ti)}h | Saldo: ${neu>=0?'+':''}${fH(neu)}h`);
   return lines.join('\n');
 }
+
+function toggleViewMode(){
+  S.viewMode=S.viewMode==='compact'?'normal':'compact';
+  localStorage.setItem('sz_viewMode',S.viewMode);
+  const btn=document.querySelector('.view-toggle');
+  if(btn) btn.classList.toggle('active',S.viewMode==='compact');
+  if(S.view==='uebersicht') renderSub();
+}
+
+function jumpToDate(){
+  const d=document.getElementById('searchBar').value;
+  if(!d) return;
+  // Format: DD.MM oder DD.MM.YYYY
+  const parts=d.split('.');
+  if(parts.length<2) return;
+  let day=parseInt(parts[0]),month=parseInt(parts[1]),year=parts[2]?parseInt(parts[2]):S.year;
+  if(day<1||day>31||month<1||month>12) return;
+  // Navigiere zu dem Monat wenn nötig
+  if(month!==S.month||year!==S.year){
+    S.month=month; S.year=year;
+    updateMonthLabel();
+  }
+  // Öffne die Übersicht View (wie openView macht)
+  S.view='uebersicht';
+  const sv=document.getElementById('subView');
+  const ms=document.getElementById('mainScroll');
+  document.getElementById('bar').classList.add('show');
+  document.getElementById('subTitle').textContent='Tage';
+  document.querySelector('.sub-title-icon').textContent='📋';
+  document.getElementById('searchBar').value='';
+  renderSub();
+  ms.style.display='none';
+  sv.style.display='block';
+  sv.classList.remove('closing');
+  sv.classList.add('opening');
+  sv.addEventListener('animationend',()=>sv.classList.remove('opening'),{once:true});
+  
+  // Springe zum Tag
+  setTimeout(()=>{
+    const key=dKey(year,month,day);
+    const el=document.querySelector(`[data-key="${key}"]`);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+  },150);
+}
+
 function openShareModal(){
   const txt=buildShareText();
   document.getElementById('sharePreview').textContent=txt;
@@ -1239,6 +1251,7 @@ function openShareModal(){
   };
   document.getElementById('shareModal').style.display='flex';
 }
+
 function closeShareModal(){document.getElementById('shareModal').style.display='none';}
 
 function init(){
