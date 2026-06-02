@@ -511,7 +511,7 @@ let S={year:new Date().getFullYear(),month:new Date().getMonth()+1,view:'home',d
 
 function fH(n){if(n==null||isNaN(n))return'–';const s=n<0?'-':'',a=Math.abs(n),h=Math.floor(a),m=String(Math.round((a-h)*100)).padStart(2,'0');return s+h+','+m;}
 function dKey(y,m,d){return`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
-function step(v,d){let r=Math.round((v+d*STEP)*100)/100;const h=Math.floor(Math.abs(r)),fr=Math.round((Math.abs(r)-h)*100);if(fr>=60)r=Math.sign(r||1)*((h+1)+(fr-60)/100);return Math.max(0,r);}
+function step(v,d){const toMin=x=>Math.floor(Math.abs(x))*60+Math.round((Math.abs(x)-Math.floor(Math.abs(x)))*100);const newMin=Math.max(0,toMin(v)+d*15);return Math.floor(newMin/60)+((newMin%60)/100);}
 function wdays(y,m){const a=[],c=new Date(y,m,0).getDate();for(let d=1;d<=c;d++){const dw=new Date(y,m-1,d).getDay();if(dw>=1&&dw<=5)a.push({d,dow:dw,key:dKey(y,m,d)});}return a;}
 function wKey(y,m,d){const dt=new Date(Date.UTC(y,m-1,d));dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7));const y1=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return`${dt.getUTCFullYear()}-W${String(Math.ceil((((dt-y1)/86400000)+1)/7)).padStart(2,'0')}`;}
 function weeksOf(y,m){const w={};wdays(y,m).forEach(({d,dow,key})=>{const k=wKey(y,m,d);if(!w[k])w[k]=[];w[k].push({d,dow,key});});return w;}
