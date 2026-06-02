@@ -180,9 +180,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 .d-badge.b-ks{background:#e57373;color:#fff}
 .d-body{padding:14px 16px}
 .d-h-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.d-diff{font-size:12px;font-weight:800;padding:4px 8px;border-radius:20px;white-space:nowrap}
-.d-diff.pos{background:#e8f8e8;color:#1a7a30}
-.d-diff.neg{background:#fdecea;color:#c62828}
+.d-diff-row{text-align:right;font-size:12px;font-weight:800;padding:4px 8px;border-radius:8px;margin-bottom:10px}
+.d-diff-row.pos{background:#e8f8e8;color:#1a7a30;border:1px solid #b8e8b8}
+.d-diff-row.neg{background:#fdecea;color:#c62828;border:1px solid #f5c0bc}
+.d-diff-row.exact{background:#f0f8f0;color:var(--grn);border:1px solid #c8e8c8}
 .d-summary{background:var(--dark);border-radius:16px;padding:16px;margin:12px 0;color:#fff}
 .d-summary h4{font-size:13px;color:var(--lime);margin-bottom:12px;font-weight:800;letter-spacing:.3px}
 .d-sum-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
@@ -656,8 +657,8 @@ function rUebersicht(){
           <button class="s-btn m" onclick="adjD('${key}',${dow},-1)"${st?' disabled':''}>−</button>
           <span class="d-h-show${st==='keine_schule'?' neg':''}">${fH(D.ist)}h</span>
           <button class="s-btn p" onclick="adjD('${key}',${dow},1)"${st?' disabled':''}>+</button>
-          ${diffTxt?`<span class="d-diff ${diffCls}">${diffTxt}</span>`:''}
         </div>
+        ${!st?`<div class="d-diff-row ${diff>0?'pos':diff<0?'neg':'exact'}">${diff>0?'+'+fH(diff)+'h über Soll':diff<0?fH(diff)+'h unter Soll':'✓ genau'}</div>`:''}
         ${p.team?`<div class="d-team"><span class="d-team-lbl">💬 Teambesprechung</span>
           <button class="s-btn m" onclick="adjT('${key}',${dow},-1)">−</button>
           <span class="d-team-val">${fH(D.team)}h</span>
