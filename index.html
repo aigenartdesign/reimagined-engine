@@ -515,7 +515,7 @@ function wdays(y,m){const a=[],c=new Date(y,m,0).getDate();for(let d=1;d<=c;d++)
 function wKey(y,m,d){const dt=new Date(Date.UTC(y,m-1,d));dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7));const y1=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return`${dt.getUTCFullYear()}-W${String(Math.ceil((((dt-y1)/86400000)+1)/7)).padStart(2,'0')}`;}
 function weeksOf(y,m){const w={};wdays(y,m).forEach(({d,dow,key})=>{const k=wKey(y,m,d);if(!w[k])w[k]=[];w[k].push({d,dow,key});});return w;}
 function dd(key,dow){const p=PLAN[dow];if(!p)return null;const st=S.data[key]||{},team=st.team!==undefined?st.team:(p.team?TDEF:0),def=p.soll+(p.team?team:0);let ist=st.ist!==undefined?st.ist:def;if(st.status==='keine_schule')ist=-ist;return{ist,status:st.status||'',team,grund:st.grund||''};};
-function cIst(d){if(!d||d.status)return 0;return d.ist;}
+function cIst(d){if(!d)return 0;if(d.status==='keine_schule')return d.ist;if(d.status)return 0;return d.ist;}
 function wSoll(days){const full=days.length===5||[1,2,3,4,5].every(dw=>days.some(x=>x.dow===dw));if(full)return WSOLL;let s=0;days.forEach(({dow,key})=>{const d=dd(key,dow);if(!d)return;s+=PLAN[dow].soll+(PLAN[dow].team?(d.team||TDEF):0);});return Math.round(s*100)/100;}
 function wIst(days){let s=0;days.forEach(({dow,key})=>s+=cIst(dd(key,dow)));return Math.round(s*100)/100;}
 function mCalc(){const w=weeksOf(S.year,S.month);let ts=0,ti=0,tv=0;Object.entries(w).forEach(([k,days])=>{ts+=wSoll(days);ti+=wIst(days);tv+=S.vorb[k]!==undefined?S.vorb[k]:VDEF;});ts=Math.round(ts*100)/100;ti=Math.round(ti*100)/100;tv=Math.round(tv*100)/100;return{ts,ti,tv,ub:S.ubertrag,neu:Math.round((ti+tv-ts+S.ubertrag)*100)/100};}
@@ -725,7 +725,7 @@ function rKompakt(){
         <div class="k-d"><span class="k-kz">${p.kz}</span><span class="k-dt">${d}.${String(S.month).padStart(2,'0')}.</span></div>
         <span class="k-az">${p.az}</span>
         ${D?`<div class="k-ctrl" style="display:flex;align-items:center;gap:4px">${st
-          ?`<span class="k-stat">${st==='keine_schule'?'Schule':st}</span>`
+          ?st==='keine_schule'?`<span class="k-ist" style="color:#c62828">−${fH(Math.abs(D.ist))}</span>`:`<span class="k-stat">${st==='frei'?'Frei':'Krank'}</span>`
           :`<button class="s-btn m" onclick="adjD('${key}',${dow},-1)">−</button><span class="k-ist">${fH(D.ist)}</span><button class="s-btn p" onclick="adjD('${key}',${dow},1)">+</button>${diffBadge}`
         }</div>`:`<div class="k-ctrl"><span class="k-ist">–</span></div>`}
       </div>`;
