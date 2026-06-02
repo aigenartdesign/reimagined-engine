@@ -87,9 +87,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 .tf-st-btn{padding:11px 4px;border-radius:12px;border:1.5px solid var(--border);
   background:#fafffe;color:var(--sub);font-size:13px;font-weight:600;cursor:pointer;
   transition:all .15s;white-space:nowrap}
-.tf-st-btn.ak-frei{background:#f5a623;border-color:#e6a000;color:#fff;font-weight:800}
-.tf-st-btn.ak-krank{background:#fff3e0;border-color:var(--ora);color:var(--ora);font-weight:800}
-.tf-st-btn.ak-ks{background:#fce4ec;border-color:var(--pin);color:var(--pin);font-weight:800}
+.tf-st-btn.ak-frei{background:#FFB300;border-color:#f5a623;color:#fff;font-weight:800}
+.tf-st-btn.ak-krank{background:#e3f2fd;border-color:#1976d2;color:#1976d2;font-weight:800}
+.tf-st-btn.ak-ks{background:#ffebee;border-color:#c62828;color:#c62828;font-weight:800}
 /* Team */
 .tf-team{background:#fffbf0;border:1.5px solid #fde8b0;border-radius:12px;
   display:flex;align-items:center;padding:10px 14px;gap:10px;margin-bottom:12px}
@@ -145,11 +145,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 /* ── SUB VIEW ── */
 #subView{display:none;padding-bottom:80px;background:transparent;min-height:100vh;margin-top:-90px}
 .sub-hdr{display:flex;align-items:center;padding:12px 14px 10px;gap:12px;
-  background:rgba(0,0,0,.25);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.back-btn{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.35);color:#fff;cursor:pointer;
-  border-radius:12px;padding:9px 16px;font-size:14px;font-weight:800;
-  display:flex;align-items:center;gap:6px;flex-shrink:0;white-space:nowrap;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  background:rgba(0,0,0,.25);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  position:relative;justify-content:center}
+.back-btn{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);color:#fff;cursor:pointer;
+  border-radius:10px;padding:6px 12px;font-size:12px;font-weight:700;
+  display:flex;align-items:center;gap:4px;flex-shrink:0;white-space:nowrap;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  position:absolute;left:14px;transition:all .2s}
+.back-btn.bottom{position:relative;left:0}
 .sub-title{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.3px}
 .sub-content{padding:8px 14px;background:var(--bg);border-radius:20px 20px 0 0;margin-top:0;min-height:calc(100vh - 160px)}
 
@@ -177,6 +180,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 .d-badge.b-ks{background:#e57373;color:#fff}
 .d-body{padding:14px 16px}
 .d-h-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.d-diff{font-size:12px;font-weight:800;padding:4px 8px;border-radius:20px;white-space:nowrap}
+.d-diff.pos{background:#e8f8e8;color:#1a7a30}
+.d-diff.neg{background:#fdecea;color:#c62828}
+.d-summary{background:var(--dark);border-radius:16px;padding:16px;margin:12px 0;color:#fff}
+.d-summary h4{font-size:13px;color:var(--lime);margin-bottom:12px;font-weight:800;letter-spacing:.3px}
+.d-sum-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.d-sum-box{background:rgba(255,255,255,.08);border-radius:10px;padding:10px 6px;text-align:center}
+.d-sum-box .lbl{font-size:10px;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:4px}
+.d-sum-box .val{font-size:16px;font-weight:900;color:#fff}
+.d-sum-box .val.pos{color:var(--lime)}
+.d-sum-box .val.neg{color:#ff6b6b}
 .d-h-inp{flex:1;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:16px;color:var(--txt)}
 .d-h-inp:disabled{opacity:.35;background:#f5f5f5}
 .d-h-show{background:var(--dark);border-radius:10px;padding:10px 14px;
@@ -212,12 +226,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 
 /* KOMPAKT */
 .kw-block{background:var(--card);border-radius:16px;border:1.5px solid var(--border);
-  box-shadow:0 3px 12px rgba(13,43,20,.08);margin-bottom:10px;overflow:hidden}
+  margin-bottom:12px;overflow:hidden}
+.kw-label{background:var(--dark);color:var(--lime);font-size:12px;font-weight:800;
+  padding:6px 16px;letter-spacing:.5px}
+  box-shadow:0 3px 12px rgba(13,43,20,.08)}
 .kw-head{background:linear-gradient(135deg,var(--dark),var(--mid));padding:12px 16px;display:flex;
   justify-content:space-between;border-bottom:none}
 .kw-head span:first-child{font-size:13px;font-weight:800;color:var(--lime)}
 .kw-head span:last-child{font-size:12px;color:rgba(255,255,255,.55)}
-.k-row{display:grid;grid-template-columns:64px 1fr 42px 1fr;
+.k-row{display:grid;grid-template-columns:64px 1fr 1fr;
   align-items:center;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border)}
 .k-row:last-of-type{border-bottom:none}
 .k-row.k-today{background:linear-gradient(135deg,#e8f8e8,#d4f5d4)}
@@ -232,7 +249,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 .k-ctrl{display:flex;align-items:center;gap:5px;justify-content:flex-end}
 .k-ist{font-size:16px;font-weight:900;color:var(--dark);min-width:40px;text-align:center}
 .k-stat{font-size:11px;color:var(--faint);font-style:italic;text-align:right}
-.s-btn{width:28px;height:28px;border-radius:50%;border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.s-btn{width:28px;height:28px;border-radius:50%;border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .s-btn.m{background:var(--red)}.s-btn.p{background:var(--grn)}
 .k-sum{background:var(--grn-light);padding:14px 16px;border-top:2px solid var(--lime2);display:flex;justify-content:space-around}
 .k-sum-item{text-align:center}
@@ -262,8 +279,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
   padding-bottom:max(10px,env(safe-area-inset-bottom));gap:8px}
 #bar.show{display:flex}
 .bb-share{flex:1.5;padding:14px 6px;border:none;border-radius:12px;
-  background:var(--lime);color:var(--dark);font-size:14px;font-weight:900;cursor:pointer;
-  box-shadow:0 3px 12px rgba(109,235,109,.35)}
+  background:linear-gradient(135deg,#ff1493,#ee82ee);color:#fff;font-size:14px;font-weight:900;cursor:pointer;
+  box-shadow:0 3px 12px rgba(255,20,147,.35);font-family:'Georgia',serif;font-style:italic}
 .bb-save,.bb-print{flex:1;padding:14px 6px;border:none;border-radius:12px;
   background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);
   font-size:13px;font-weight:700;cursor:pointer;
@@ -312,6 +329,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
   animation: slideDown .28s cubic-bezier(.32,.72,0,1) forwards;
 }
 
+/* Print Layout */
+#printModal #printContent{font-family:'Courier New',Courier,monospace;font-size:10px;color:#000;line-height:1.3}
+.p-header{margin-bottom:8px;font-size:10px;line-height:1.4}
+.p-line{display:flex;align-items:center;margin-bottom:3px;white-space:nowrap}
+.p-fill{border-bottom:1px solid #000;display:inline-block}
+.p-tbl{width:100%;border-collapse:collapse;margin:4px 0;font-size:9px;border:1px solid #000}
+.p-tbl td{border:1px solid #000;padding:3px 2px;text-align:left;height:16px;vertical-align:top}
+.p-head{background:#fff;font-weight:600;text-align:center;font-size:9px}
+.p-head td{vertical-align:middle;padding:4px 2px;height:auto}
+.p-datum{width:8%;text-align:center;font-size:9px}
+.p-azeit{width:16%;text-align:center}
+.p-pause{width:9%;text-align:center}
+.p-stunden{width:9%;text-align:center}
+.p-grund{width:58%}
+.p-row{height:14px}
+.p-sum{background:#fff;font-weight:600;font-size:8px;padding:2px!important;height:auto}
+.p-sum td{border:1px solid #000;padding:3px 2px;height:auto}
+.p-footer{margin-top:4px;font-size:9px;line-height:1.5}
+.p-sigs{margin-top:12px;display:flex;justify-content:space-between;font-size:9px;line-height:1.8}
+.p-sigs div{flex:1;text-align:left}
+@media print{
+  #printModal{display:flex!important;background:#fff!important}
+  #printModal>div{max-width:100%!important;border:none!important;background:#fff!important;padding:8px!important;margin:0!important}
+  .p-tbl{page-break-inside:avoid;margin:2px 0}
+  body,html{background:#fff;margin:0;padding:0}
+  #printContent{color:#000}
+  button{display:none!important}
+}
+
 @media print{
   #hdr,#mainScroll .nav-grid,#mainScroll .nav-full,#mainScroll .evt-card,#bar{display:none!important}
   .sub-hdr,#bar{display:none!important}
@@ -321,11 +367,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 </style>
 </head>
 <body>
+<div id="printModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:9999;flex-direction:column;align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;width:100%;max-width:1000px;max-height:90vh;border-radius:12px;overflow:auto;padding:20px">
+    <div id="printContent"></div>
+    <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end">
+      <button onclick="closePrintModal()" style="padding:10px 20px;border:1.5px solid var(--border);background:#fff;border-radius:8px;cursor:pointer">Abbrechen</button>
+      <button onclick="doPrint()" style="padding:10px 20px;border:none;background:var(--grn);color:#fff;border-radius:8px;cursor:pointer;font-weight:600">🖨️ Drucken</button>
+    </div>
+  </div>
+</div>
 
 <div id="hdr">
   <div class="hdr-row">
     <div class="hdr-app">Stundenzettel</div>
-    <div class="hdr-name">Marc Hoß</div>
+    <div class="hdr-name">Sabine Berners</div>
     <div style="font-size:13px;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:10px;letter-spacing:.5px">RGT &nbsp;·&nbsp; AWO</div>
     <div class="hdr-badge">31 Std. / Woche</div>
   </div>
@@ -366,37 +421,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
   </div>
 </div>
 
-<!-- Neues Schuljahr Button - Mittig und prominent -->
-<div style="display:flex;justify-content:center;flex-direction:column;align-items:center;padding:0px 20px 0px;margin-bottom:0px;margin-top:-20px">
-  <button onclick="confirmNewYear()" style="
-    width:90px;height:90px;border-radius:50%;
-    background:linear-gradient(135deg,#ffc107,#ffb300);
-    border:3px solid #ffb300;
-    color:#fff;
-    font-size:42px;
-    font-weight:700;
-    cursor:pointer;
-    box-shadow:0 6px 18px rgba(255,193,7,.3);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    transition:transform .2s,box-shadow .2s;
-    margin-bottom:10px;
-  " onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 10px 26px rgba(255,193,7,.45)'" 
-     onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 6px 18px rgba(255,193,7,.3)'">
-    🎓
-  </button>
-  <div style="font-size:13px;font-weight:700;color:#fff;text-align:center">Neues Schuljahr</div>
-</div>
-
 <div id="subView">
   <div class="sub-hdr">
-    <button class="back-btn" onclick="closeView()">‹ Zurück</button>
+    <button class="back-btn" onclick="closeView()">← Zurück</button>
     <span class="sub-title" id="subTitle"></span>
   </div>
   <div class="sub-content" id="subContent"></div>
 </div>
 
 <div id="bar">
-  <button class="bb-share" id="shareBtn">📤 Teilen</button>
+  <button class="bb-share" id="shareBtn">✨ Janine</button>
   <button class="bb-save"  id="saveBtn">💾 Speichern</button>
   <button class="bb-print" id="printBtn">🖨 Drucken</button>
 </div>
@@ -420,7 +454,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
     <button class="modal-close" onclick="closePlanModal()">×</button>
     <h2>🎓 Neues Schuljahr – Stundenplan</h2>
     <div id="planForm" style="display:grid;gap:16px;margin-top:16px"></div>
-    <button class="evt-save-btn" onclick="savePlan()" style="margin-top:16px">Alles zurücksetzen & Stundenplan übernehmen</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+      <button class="evt-inp" onclick="closePlanModal()" style="background:#fff;color:var(--txt);border:1.5px solid var(--border);border-radius:8px;padding:12px;font-weight:700;cursor:pointer;font-size:14px">Abbrechen</button>
+      <button class="evt-save-btn" onclick="savePlan()">Alles zurücksetzen & Übernehmen</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="shareModal">
+  <div class="modal" style="text-align:center;max-width:320px">
+    <h2 style="font-size:22px;margin-bottom:6px">✨ An Janine senden</h2>
+    <p style="color:var(--sub);margin-bottom:16px;font-size:13px">Stundenzettel für <strong id="shareMonthLabel"></strong> weiterleiten</p>
+    <div id="sharePreview" style="background:#f5f5f5;border-radius:10px;padding:12px;text-align:left;font-size:11px;font-family:monospace;white-space:pre-wrap;max-height:200px;overflow-y:auto;margin-bottom:16px;color:#333"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <button id="shareWA" style="padding:12px 8px;border-radius:10px;border:none;background:#25d366;color:#fff;font-weight:700;cursor:pointer;font-size:13px">📱 WhatsApp</button>
+      <button id="shareEmail" style="padding:12px 8px;border-radius:10px;border:none;background:#1976d2;color:#fff;font-weight:700;cursor:pointer;font-size:13px">✉️ E-Mail</button>
+    </div>
+    <button id="shareCopy" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-weight:700;cursor:pointer;font-size:13px;margin-bottom:10px">📋 Text kopieren</button>
+    <button onclick="closeShareModal()" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:#fff;color:var(--sub);font-weight:600;cursor:pointer;font-size:13px">Schließen</button>
   </div>
 </div>
 
@@ -446,13 +497,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 
 <script>
 const PLAN={
-  1:{kz:'Mo',az:'7:30–15:00', soll:7.00,pause:'0:30',team:false},
-  2:{kz:'Di',az:'10:00–14:20',soll:4.20,pause:'–',   team:false},
-  3:{kz:'Mi',az:'8:00–13:30', soll:5.30,pause:'–',   team:false},
-  4:{kz:'Do',az:'8:00–16:00', soll:8.30,pause:'–',   team:true },
-  5:{kz:'Fr',az:'10:00–15:00',soll:5.00,pause:'–',   team:false},
+  1:{kz:'Mo',az:'8:00–15:00', soll:6.30,pause:'–',   team:false},
+  2:{kz:'Di',az:'10:00–16:00',soll:6.00,pause:'–',   team:false},
+  3:{kz:'Mi',az:'10:15–16:00',soll:5.45,pause:'–',   team:false},
+  4:{kz:'Do',az:'10:00–16:00',soll:6.45,pause:'–',   team:true },
+  5:{kz:'Fr',az:'8:00–13:20', soll:5.00,pause:'–',   team:false},
 };
-const WSOLL=31,TDEF=1,VDEF=1,STEP=0.25;
+const WSOLL=31,TDEF=1,VDEF=1,STEP=0.15;
 const MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 const TKZ=['So','Mo','Di','Mi','Do','Fr','Sa'];
 let S={year:new Date().getFullYear(),month:new Date().getMonth()+1,view:'home',data:{},vorb:{},ubertrag:0};
@@ -463,13 +514,13 @@ function step(v,d){let r=Math.round((v+d*STEP)*100)/100;const h=Math.floor(Math.
 function wdays(y,m){const a=[],c=new Date(y,m,0).getDate();for(let d=1;d<=c;d++){const dw=new Date(y,m-1,d).getDay();if(dw>=1&&dw<=5)a.push({d,dow:dw,key:dKey(y,m,d)});}return a;}
 function wKey(y,m,d){const dt=new Date(Date.UTC(y,m-1,d));dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7));const y1=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return`${dt.getUTCFullYear()}-W${String(Math.ceil((((dt-y1)/86400000)+1)/7)).padStart(2,'0')}`;}
 function weeksOf(y,m){const w={};wdays(y,m).forEach(({d,dow,key})=>{const k=wKey(y,m,d);if(!w[k])w[k]=[];w[k].push({d,dow,key});});return w;}
-function dd(key,dow){const p=PLAN[dow];if(!p)return null;const st=S.data[key]||{},team=st.team!==undefined?st.team:(p.team?TDEF:0),def=p.soll+(p.team?team:0);return{ist:st.ist!==undefined?st.ist:def,status:st.status||'',team,grund:st.grund||''};}
+function dd(key,dow){const p=PLAN[dow];if(!p)return null;const st=S.data[key]||{},team=st.team!==undefined?st.team:(p.team?TDEF:0),def=p.soll+(p.team?team:0);let ist=st.ist!==undefined?st.ist:def;if(st.status==='keine_schule')ist=-ist;return{ist,status:st.status||'',team,grund:st.grund||''};};
 function cIst(d){if(!d||d.status)return 0;return d.ist;}
 function wSoll(days){const full=days.length===5||[1,2,3,4,5].every(dw=>days.some(x=>x.dow===dw));if(full)return WSOLL;let s=0;days.forEach(({dow,key})=>{const d=dd(key,dow);if(!d)return;s+=PLAN[dow].soll+(PLAN[dow].team?(d.team||TDEF):0);});return Math.round(s*100)/100;}
 function wIst(days){let s=0;days.forEach(({dow,key})=>s+=cIst(dd(key,dow)));return Math.round(s*100)/100;}
 function mCalc(){const w=weeksOf(S.year,S.month);let ts=0,ti=0,tv=0;Object.entries(w).forEach(([k,days])=>{ts+=wSoll(days);ti+=wIst(days);tv+=S.vorb[k]!==undefined?S.vorb[k]:VDEF;});ts=Math.round(ts*100)/100;ti=Math.round(ti*100)/100;tv=Math.round(tv*100)/100;return{ts,ti,tv,ub:S.ubertrag,neu:Math.round((ti+tv-ts+S.ubertrag)*100)/100};}
 
-function sk(){return`sz6_${S.year}_${S.month}`;}
+function sk(){return`sb6_${S.year}_${S.month}`;}
 function save(){localStorage.setItem(sk(),JSON.stringify({data:S.data,vorb:S.vorb,ubertrag:S.ubertrag}));}
 function load(){const r=localStorage.getItem(sk());if(r){const p=JSON.parse(r);S.data=p.data||{};S.vorb=p.vorb||{};S.ubertrag=p.ubertrag||0;}else{S.data={};S.vorb={};S.ubertrag=0;}}
 
@@ -538,24 +589,24 @@ function rToday(){
       <div class="tf-right"><div class="tf-dat">${TKZ[dow]}, ${d}. ${MN[m-1]}</div><div class="tf-az">${p.az}</div></div>
     </div>
     <div class="tf-main">
-      <div class="tf-std${st?' zero':''}"><span>${st?'0,00':fH(ist)}</span><span class="unit"> Std.</span></div>
+      <div class="tf-std${st?' zero':''}"><span>${fH(ist)}</span><span class="unit"> Std.</span></div>
       <div class="tf-adj">
-        <button class="adj-btn m" onclick="adjD('${key}',${dow},-1)">−</button>
-        <button class="adj-btn p" onclick="adjD('${key}',${dow},1)">+</button>
+        <button class="adj-btn m" onclick="adjD('${key}',${dow},-1)"${st?' disabled':''}>−</button>
+        <button class="adj-btn p" onclick="adjD('${key}',${dow},1)"${st?' disabled':''}>+</button>
       </div>
     </div>
     ${!st?`<div class="tf-prog">
       <div class="tf-prog-lbl"><span>${fH(ist)}h</span><span style="color:${diffCol}">${diffTxt}</span></div>
       <div class="tf-prog-bg"><div class="tf-prog-fill ${dc}" style="width:${pct}%"></div></div>
     </div>`:''}
-    ${p.team?`<div class="tf-team"><span class="tf-team-lbl">🤝 Teambesprechung</span>
+    ${p.team?`<div class="tf-team"><span class="tf-team-lbl">💬 Teambesprechung</span>
       <button class="t-btn m" onclick="adjT('${key}',${dow},-1)">−</button>
       <span class="tf-team-val">${fH(D?D.team:TDEF)}h</span>
       <button class="t-btn p" onclick="adjT('${key}',${dow},1)">+</button></div>`:''}
     <div class="tf-status">
       <button class="tf-st-btn${st==='frei'?' ak-frei':''}" onclick="togS('${key}',${dow},'frei')"><span class="bi">★</span> Frei</button>
-      <button class="tf-st-btn${st==='krank'?' ak-krank':''}" onclick="togS('${key}',${dow},'krank')"><span class="bi">✕</span> Krank</button>
-      <button class="tf-st-btn${st==='keine_schule'?' ak-ks':''}" onclick="togS('${key}',${dow},'keine_schule')">🚫 Schule</button>
+      <button class="tf-st-btn${st==='krank'?' ak-krank':''}" onclick="togS('${key}',${dow},'krank')"><span class="bi">😷</span> Krank</button>
+      <button class="tf-st-btn${st==='keine_schule'?' ak-ks':''}" onclick="togS('${key}',${dow},'keine_schule')"><span class="bi">🚫</span> Schule</button>
     </div>
   </div>`;
 }
@@ -570,9 +621,27 @@ function renderSub(){
 function rUebersicht(){
   const days=wdays(S.year,S.month);
   const now=new Date(),tod=dKey(now.getFullYear(),now.getMonth()+1,now.getDate());
+  const isCurrentMonth=S.year===now.getFullYear()&&S.month===now.getMonth()+1;
+  
+  // Heute oben, dann zukünftige aufsteigend, dann vergangene aufsteigend
+  if(isCurrentMonth){
+    const todayItem=days.find(d=>d.key===tod);
+    const future=days.filter(d=>d.key>tod);
+    const past=days.filter(d=>d.key<tod);
+    days.length=0;
+    if(todayItem)days.push(todayItem);
+    days.push(...future,...past);
+  }
+  
   let h='';
+  let totalSoll=0,totalIst=0;
   days.forEach(({d,dow,key})=>{
     const D=dd(key,dow),p=PLAN[dow],st=D.status;
+    const soll=p.soll+(p.team?(D.team||0):0);
+    const diff=st?0:Math.round((D.ist-soll)*100)/100;
+    const diffTxt=diff>0?`+${fH(diff)}h`:diff<0?`${fH(diff)}h`:'';
+    const diffCls=diff>0?'pos':diff<0?'neg':'';
+    if(!st){totalSoll+=soll;totalIst+=D.ist;}
     const isT=key===tod&&S.year===now.getFullYear()&&S.month===now.getMonth()+1;
     const hc=isT?'h-today':st?'h-'+st.replace('_','-'):'';
     const bl=st==='frei'?'★ Frei':st==='krank'?'✕ Krank':st==='keine_schule'?'🚫 Schule':p.az;
@@ -584,9 +653,12 @@ function rUebersicht(){
       <div class="d-body">
         <div class="d-h-row">
           <input class="d-h-inp" type="text" value="${fH(D.ist)}"${st?' disabled':''} onchange="setI('${key}',${dow},this.value)">
-          <span class="d-h-show${st==='keine_schule'?' neg':''}">${st?'0,00':fH(D.ist)}h</span>
+          <button class="s-btn m" onclick="adjD('${key}',${dow},-1)"${st?' disabled':''}>−</button>
+          <span class="d-h-show${st==='keine_schule'?' neg':''}">${fH(D.ist)}h</span>
+          <button class="s-btn p" onclick="adjD('${key}',${dow},1)"${st?' disabled':''}>+</button>
+          ${diffTxt?`<span class="d-diff ${diffCls}">${diffTxt}</span>`:''}
         </div>
-        ${p.team?`<div class="d-team"><span class="d-team-lbl">🤝 Teambesprechung</span>
+        ${p.team?`<div class="d-team"><span class="d-team-lbl">💬 Teambesprechung</span>
           <button class="s-btn m" onclick="adjT('${key}',${dow},-1)">−</button>
           <span class="d-team-val">${fH(D.team)}h</span>
           <button class="s-btn p" onclick="adjT('${key}',${dow},1)">+</button></div>`:''}
@@ -599,6 +671,16 @@ function rUebersicht(){
         <input class="d-grund" type="text" placeholder="Begründung..." value="${D.grund}" onchange="setG('${key}',${dow},this.value)">
       </div></div>`;
   });
+  // Zusammenfassung
+  const totalDiff=Math.round((totalIst-totalSoll)*100)/100;
+  h+=`<div class="d-summary">
+    <h4>📊 Bisherige Bilanz – ${MN[S.month-1]}</h4>
+    <div class="d-sum-grid">
+      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(totalSoll)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(totalIst)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${totalDiff>0?'pos':totalDiff<0?'neg':''}">${totalDiff>=0?'+':''}${fH(totalDiff)}h</div></div>
+    </div>
+  </div>`;
   const weeks=weeksOf(S.year,S.month);
   h+=`<div class="vorb-section"><h3>📝 Vorbereitungszeit</h3>`;
   Object.entries(weeks).forEach(([wk,days])=>{
@@ -611,46 +693,76 @@ function rUebersicht(){
         <button class="v-btn p" onclick="adjV('${wk}',1)">+</button>
       </div></div>`;
   });
-  return h+'</div>';
+  return h+`</div><div style="text-align:center;padding:16px 14px 28px">
+    <button onclick="closeView()" style="background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);color:#fff;border-radius:10px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer">← Zurück</button>
+  </div>`;
 }
 
 function rKompakt(){
-  const now=new Date(),dow=(now.getDay()||7);
-  const mon=new Date(now);mon.setDate(now.getDate()-(dow-1));
-  const tod=dKey(now.getFullYear(),now.getMonth()+1,now.getDate());
-  let h='<div class="kw-block">',wkRows=[];
-  for(let i=0;i<5;i++){
-    const dt=new Date(mon);dt.setDate(mon.getDate()+i);
-    const y=dt.getFullYear(),m=dt.getMonth()+1,day=dt.getDate(),dw=dt.getDay();
-    const key=dKey(y,m,day),D=dd(key,dw),p=PLAN[dw];
-    const cur=y===S.year&&m===S.month,isT=key===tod&&cur,st=D?D.status:'';
-    wkRows.push({dw,key,D,cur});
-    h+=`<div class="k-row${isT?' k-today':''}${st?' k-'+st.replace('_','-'):''}">
-      <div class="k-d"><span class="k-kz">${p.kz}</span><span class="k-dt">${day}.${String(m).padStart(2,'0')}.</span></div>
-      <span class="k-az">${p.az}</span><span class="k-pz">${p.pause}</span>
-      ${cur&&D?`<div class="k-ctrl">${st
-        ?`<span class="k-stat">${st==='keine_schule'?'Schule':st}</span>`
-        :`<button class="s-btn m" onclick="adjD('${key}',${dw},-1)">−</button><span class="k-ist">${fH(D.ist)}</span><button class="s-btn p" onclick="adjD('${key}',${dw},1)">+</button>`
-      }</div>`:`<div class="k-ctrl"><span class="k-ist">${D?(st||fH(D.ist)):'–'}</span></div>`}
-    </div>`;
-  }
-  const wkInM=wkRows.filter(r=>r.cur&&r.D).map(r=>({dow:r.dw,key:r.key}));
-  if(wkInM.length){
-    const wk=wKey(S.year,S.month,wkInM[0].key.split('-')[2]);
-    const ws=wSoll(wkInM),wi=wIst(wkInM),wd=Math.round((wi-ws)*100)/100;
+  const tod=dKey(new Date().getFullYear(),new Date().getMonth()+1,new Date().getDate());
+  const weeks=weeksOf(S.year,S.month);
+  let h='';
+
+  Object.entries(weeks).forEach(([wk,wDays])=>{
+    // Nur Wochen anzeigen die bereits begonnen haben
+    const firstDay=wDays[0];
+    const firstDate=new Date(S.year,S.month-1,firstDay.d);
+    const today=new Date();today.setHours(0,0,0,0);
+    if(firstDate>today) return; // zukünftige Wochen überspringen
+    let wkRows=[];
+    const kw=wk.split('-W')[1];
+    let wh=`<div class="kw-block">`;
+    wh+=`<div class="kw-label">KW ${kw}</div>`;
+
+    wDays.forEach(({d,dow,key})=>{
+      const D=dd(key,dow),p=PLAN[dow];
+      const isT=key===tod,st=D?D.status:'';
+      const soll=p.soll+(p.team?(D&&D.team||0):0);
+      const diff=D&&!st?Math.round((D.ist-soll)*100)/100:0;
+      const diffBadge=diff!==0?`<span class="d-diff ${diff>0?'pos':'neg'}" style="font-size:10px;padding:2px 6px">${diff>0?'+':''}${fH(diff)}h</span>`:'';
+      wkRows.push({dw:dow,key,D,cur:true});
+      wh+=`<div class="k-row${isT?' k-today':''}${st?' k-'+st.replace('_','-'):''}">
+        <div class="k-d"><span class="k-kz">${p.kz}</span><span class="k-dt">${d}.${String(S.month).padStart(2,'0')}.</span></div>
+        <span class="k-az">${p.az}</span>
+        ${D?`<div class="k-ctrl" style="display:flex;align-items:center;gap:4px">${st
+          ?`<span class="k-stat">${st==='keine_schule'?'Schule':st}</span>`
+          :`<button class="s-btn m" onclick="adjD('${key}',${dow},-1)">−</button><span class="k-ist">${fH(D.ist)}</span><button class="s-btn p" onclick="adjD('${key}',${dow},1)">+</button>${diffBadge}`
+        }</div>`:`<div class="k-ctrl"><span class="k-ist">–</span></div>`}
+      </div>`;
+    });
+
+    const ws=wSoll(wkRows),wi=wIst(wkRows),wd=Math.round((wi-ws)*100)/100;
     const v=S.vorb[wk]!==undefined?S.vorb[wk]:VDEF;
-    h+=`<div class="k-sum">
+    wh+=`<div class="k-sum">
       <div class="k-sum-item"><div class="lbl">SOLL</div><div class="val">${fH(ws)}h</div></div>
       <div class="k-sum-item"><div class="lbl">IST</div><div class="val">${fH(wi)}h</div></div>
       <div class="k-sum-item"><div class="lbl">+/–</div><div class="val${wd<0?' neg':' pos'}">${wd>=0?'+':''}${fH(wd)}h</div></div>
-    </div><div class="kw-vorb"><span style="font-size:13px;color:var(--sub)">📝 Vorbereitung</span>
+    </div>
+    <div class="kw-vorb"><span style="font-size:13px;color:var(--sub)">📝 Vorbereitung</span>
       <div class="vorb-ctrl">
         <button class="v-btn m" onclick="adjV('${wk}',-1)">−</button>
         <span class="vorb-val">${fH(v)}h</span>
         <button class="v-btn p" onclick="adjV('${wk}',1)">+</button>
       </div></div>`;
-  }
-  return h+'</div>';
+    h+=wh+'</div>';
+  });
+  // Gesamtbilanz aller angezeigten Wochen
+  const allDays=wdays(S.year,S.month).filter(({key})=>{
+    const dt=new Date(S.year,S.month-1,parseInt(key.split('-')[2]));
+    return dt<=new Date();
+  });
+  let gs=0,gi=0;
+  allDays.forEach(({dow,key})=>{const D=dd(key,dow);if(D&&!D.status){const p=PLAN[dow];gs+=p.soll+(p.team?(D.team||0):0);gi+=D.ist;}});
+  const gd=Math.round((gi-gs)*100)/100;
+  h+=`<div class="d-summary">
+    <h4>📊 Bisherige Bilanz – ${MN[S.month-1]}</h4>
+    <div class="d-sum-grid">
+      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(gs)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(gi)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${gd>0?'pos':gd<0?'neg':''}">${gd>=0?'+':''}${fH(gd)}h</div></div>
+    </div>
+  </div>`;
+  return h;
 }
 
 function rMonat(){
@@ -668,8 +780,9 @@ function rMonat(){
     <div class="m-total"><span>Neuer Stand +/–</span>
       <span class="val${neu<0?' neg':' pos'}">${neu>=0?'+':''}${fH(neu)}h</span>
     </div>
-    <div style="text-align:center;padding:12px 0;border-top:1px solid var(--border);margin-top:12px">
-      <button onclick="openPlanModal()" style="background:var(--grn);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer">🎓 Neues Schuljahr</button>
+    <div style="text-align:center;padding:12px 0;border-top:1px solid var(--border);margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+      <button onclick="confirmNewYear()" style="background:linear-gradient(135deg,#ff9800,#ff6f00);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer">🎓 Neues Schuljahr</button>
+      <button onclick="openPrintModal()" style="background:linear-gradient(135deg,#2196f3,#1565c0);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer">🖨️ Drucken</button>
     </div>
   </div>`;
 }
@@ -732,14 +845,14 @@ const DEF_EVTS=[
   {id:'s8',date:'2026-07-20',name:'🌞 1. Ferientag Sommerferien'},
 ].concat(genBirthdayEvents());
 function loadEvts(){
-  const r=localStorage.getItem('sz_evts');
+  const r=localStorage.getItem('sb_evts');
   const stored=r?JSON.parse(r):DEF_EVTS;
   // Geburtstags-Events automatisch hinzufügen (falls nicht vorhanden)
   const bdays=genBirthdayEvents();
   const merged=[...stored.filter(e=>e.type!=='birthday'),...bdays];
   return merged;
 }
-function saveEvts(e){localStorage.setItem('sz_evts',JSON.stringify(e));}
+function saveEvts(e){localStorage.setItem('sb_evts',JSON.stringify(e));}
 function rEvtWidget(){
   const evts=loadEvts();
   const today=new Date();today.setHours(0,0,0,0);
@@ -778,11 +891,10 @@ function delEvt(id){saveEvts(loadEvts().filter(e=>e.id!==id));rEvtList();}
 document.getElementById('prevBtn').onclick=()=>{S.month--;if(S.month<1){S.month=12;S.year--;}save();load();init();rToday();if(S.view!=='home')renderSub();};
 document.getElementById('nextBtn').onclick=()=>{S.month++;if(S.month>12){S.month=1;S.year++;}save();load();init();rToday();if(S.view!=='home')renderSub();};
 document.getElementById('saveBtn').onclick=()=>{save();const b=document.getElementById('saveBtn');b.textContent='✅ Gespeichert';b.classList.add('done');setTimeout(()=>{b.textContent='💾 Speichern';b.classList.remove('done');},2000);};
-document.getElementById('shareBtn').onclick=()=>{save();if(navigator.share)navigator.share({title:'Stundenzettel',url:window.location.href});else{navigator.clipboard.writeText(window.location.href).then(()=>{const b=document.getElementById('shareBtn');b.textContent='✅ Kopiert!';setTimeout(()=>{b.textContent='📤 Teilen';},2000);});}};
-document.getElementById('printBtn').onclick=()=>window.print();
+document.getElementById('shareBtn').onclick=()=>{save();openShareModal();};
 
-function loadPlan(){const r=localStorage.getItem('sz_plan');return r?JSON.parse(r):PLAN;}
-function savePlanData(newPlan){localStorage.setItem('sz_plan',JSON.stringify(newPlan));}
+function loadPlan(){const r=localStorage.getItem('sb_plan');return r?JSON.parse(r):PLAN;}
+function savePlanData(newPlan){localStorage.setItem('sb_plan',JSON.stringify(newPlan));}
 
 // Lade gespeicherten Plan beim Start
 Object.assign(PLAN,loadPlan());
@@ -853,6 +965,108 @@ function savePlan(){
   btn.classList.add('done');
   setTimeout(()=>{btn.textContent='💾 Speichern';btn.classList.remove('done');},2000);
 }
+
+function openPrintModal(){
+  const m=S.month,y=S.year;
+  const days=wdays(y,m);
+  
+  // Berechne Wochenweise
+  const weeks=[];
+  let curWeek=[];
+  days.forEach(({d,dow,key},i)=>{
+    curWeek.push({d,dow,key});
+    if(dow===5||i===days.length-1){
+      weeks.push([...curWeek]);
+      curWeek=[];
+    }
+  });
+  
+  // Berechne Monatssummen
+  const{ts,ti}=mCalc();
+  const monthDiff=Math.round((ti-ts)*100)/100;
+  
+  let tableHtml='<table class="p-tbl">';
+  tableHtml+='<tr class="p-head"><td>Datum</td><td>Arbeitszeit</td><td>Pause</td><td>Stunden</td><td>Begründung Mehr-/Minderarbeit</td></tr>';
+  
+  weeks.forEach((week,wi)=>{
+    let wSoll=0,wIst=0;
+    week.forEach(({d,dow,key})=>{
+      const D=dd(key,dow);
+      const p=PLAN[dow];
+      if(!D)return;
+      const st=D.status;
+      const ist=D.ist;
+      const az=st==='frei'?'−':st==='krank'?'−':st==='keine_schule'?'−':p.az;
+      wSoll+=p.soll+(p.team?TDEF:0);
+      wIst+=ist;
+      tableHtml+=`<tr class="p-row${st?' p-'+st:''}"><td class="p-datum">${d}.</td><td class="p-azeit">${az}</td><td class="p-pause">−</td><td class="p-stunden">${ist<0?'−'+fH(Math.abs(ist)):fH(ist)}</td><td class="p-grund"></td></tr>`;
+    });
+    const wDiff=Math.round((wIst-wSoll)*100)/100;
+    tableHtml+=`<tr class="p-sum"><td colspan="5">Gesamt SOLL Woche: ${fH(wSoll)}h &nbsp;&nbsp;&nbsp; Gesamt IST Woche: ${fH(wIst)}h &nbsp;&nbsp;&nbsp; +/- Stunden: ${wDiff>=0?'+':''}${fH(wDiff)}h</td></tr>`;
+  });
+  tableHtml+='</table>';
+  
+  const neu=ti+S.ubertrag;
+  
+  document.getElementById('printContent').innerHTML=`
+    <div class="p-header">
+      <div class="p-line">OGS: <span class="p-fill"></span></div>
+      <div class="p-line">
+        <span>Name: <span class="p-fill" style="width:140px"></span></span>
+        <span style="margin-left:20px">Monat: <span class="p-fill" style="width:100px"></span></span>
+        <span style="margin-left:20px">Wochenstunden: <span class="p-fill" style="width:40px"></span></span>
+      </div>
+      <div class="p-line" style="margin-top:8px">Übertrag Mehr-/Minderarbeitstunden: <span class="p-fill" style="width:60px"></span></div>
+    </div>
+    ${tableHtml}
+    <div class="p-footer">
+      <div class="p-line">Gesamt Monat +/- Stunden: <span class="p-fill" style="width:80px"></span></div>
+      <div class="p-line">Mehr-/Minderarbeitstunden neu: <span class="p-fill" style="width:80px"></span></div>
+    </div>
+    <div class="p-sigs">
+      <div>Datum, Unterschrift Mitarbeiter*in</div>
+      <div>Datum, Unterschrift Koordinator*in</div>
+    </div>
+  `;
+  document.getElementById('printModal').style.display='flex';
+}
+function closePrintModal(){
+  document.getElementById('printModal').style.display='none';
+}
+function doPrint(){
+  window.print();
+}
+
+function buildShareText(){
+  const m=S.month,y=S.year;
+  const days=wdays(y,m);
+  const{ts,ti,neu}=mCalc();
+  let lines=[`Stundenzettel – Sabine Berners`,`${MN[m-1]} ${y}`,`──────────────────────`];
+  days.forEach(({d,dow,key})=>{
+    const D=dd(key,dow),p=PLAN[dow],st=D.status;
+    const ist=D.ist,az=st==='frei'?'★ Frei':st==='krank'?'✕ Krank':st==='keine_schule'?'🚫 Schule':p.az;
+    lines.push(`${p.kz} ${d}.${String(m).padStart(2,'0')}. | ${az} | ${st?'–':fH(ist)+'h'} ${D.grund?'('+D.grund+')':''}`);
+  });
+  lines.push(`──────────────────────`);
+  lines.push(`SOLL: ${fH(ts)}h | IST: ${fH(ti)}h | Saldo: ${neu>=0?'+':''}${fH(neu)}h`);
+  return lines.join('\n');
+}
+function openShareModal(){
+  const txt=buildShareText();
+  document.getElementById('sharePreview').textContent=txt;
+  document.getElementById('shareMonthLabel').textContent=`${MN[S.month-1]} ${S.year}`;
+  const encoded=encodeURIComponent(txt);
+  document.getElementById('shareWA').onclick=()=>window.open(`https://wa.me/?text=${encoded}`,'_blank');
+  document.getElementById('shareEmail').onclick=()=>window.open(`mailto:?subject=Stundenzettel ${MN[S.month-1]} ${S.year}&body=${encoded}`,'_blank');
+  document.getElementById('shareCopy').onclick=()=>{
+    navigator.clipboard.writeText(txt).then(()=>{
+      document.getElementById('shareCopy').textContent='✅ Kopiert!';
+      setTimeout(()=>document.getElementById('shareCopy').textContent='📋 Text kopieren',2000);
+    });
+  };
+  document.getElementById('shareModal').style.display='flex';
+}
+function closeShareModal(){document.getElementById('shareModal').style.display='none';}
 
 function init(){document.getElementById('monthLabel').textContent=`${MN[S.month-1]} ${S.year}`;rToday();}
 load();init();rEvtWidget();
