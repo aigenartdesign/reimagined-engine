@@ -634,13 +634,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-se
 
 <script>
 const PLAN={
-  1:{kz:'Mo',az:'7:30–15:00', soll:7.00,pause:'0:30',team:false},
-  2:{kz:'Di',az:'10:00–14:20',soll:4.20,pause:'–',   team:false},
-  3:{kz:'Mi',az:'8:00–13:30', soll:5.30,pause:'–',   team:false},
-  4:{kz:'Do',az:'8:00–16:00', soll:8.30,pause:'–',   team:true },
-  5:{kz:'Fr',az:'10:00–15:00',soll:5.00,pause:'–',   team:false},
+  1:{kz:'Mo',az:'8:00–15:00', soll:6.30,pause:'0:30',team:false},
+  2:{kz:'Di',az:'10:00–16:00',soll:6.00,pause:'–',   team:false},
+  3:{kz:'Mi',az:'10:15–16:00',soll:5.75,pause:'–',   team:false},
+  4:{kz:'Do',az:'10:00–16:00', soll:6.45,pause:'–',   team:true },
+  5:{kz:'Fr',az:'8:00–13:20', soll:5.00,pause:'–',   team:false},
 };
-const WSOLL=31,TDEF=1,VDEF=1,STEP=0.15;
+const WSOLL=30,TDEF=1,VDEF=1,STEP=0.15;
 const MN=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 const TKZ=['So','Mo','Di','Mi','Do','Fr','Sa'];
 let S={year:new Date().getFullYear(),month:new Date().getMonth()+1,view:'home',viewMode:'normal',data:{},vorb:{},ubertrag:0};
@@ -891,14 +891,20 @@ function rKompakt(){
       </div></div>`;
     h+=wh+'</div>';
   });
-  // Gesamtbilanz - Nutze mCalc für Konsistenz
-  const{ts,ti,tv,neu}=mCalc();
+  // Gesamtbilanz - Berechne korrekt für Woche OHNE Vorbereitung & Übertrag
+  const allDays=wdays(S.year,S.month).filter(({key})=>{
+    const dt=new Date(S.year,S.month-1,parseInt(key.split('-')[2]));
+    return dt<=new Date();
+  });
+  let gs=0,gi=0;
+  allDays.forEach(({dow,key})=>{const D=dd(key,dow);if(D&&!D.status){const p=PLAN[dow];gs+=p.soll+(p.team?(D.team||0):0);gi+=D.ist;}});
+  const gd=Math.round((gi-gs)*100)/100;
   h+=`<div class="d-summary">
     <h4>📊 Bisherige Bilanz – ${MN[S.month-1]}</h4>
     <div class="d-sum-grid">
-      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(ts)}h</div></div>
-      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(ti)}h</div></div>
-      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${neu>0?'pos':neu<0?'neg':''}">${neu>=0?'+':''}${fH(neu)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">SOLL</div><div class="val">${fH(gs)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">IST</div><div class="val">${fH(gi)}h</div></div>
+      <div class="d-sum-box"><div class="lbl">+/–</div><div class="val ${gd>0?'pos':gd<0?'neg':''}">${gd>=0?'+':''}${fH(gd)}h</div></div>
     </div>
   </div>`;
   return h;
@@ -1260,6 +1266,23 @@ function init(){
   S.viewMode=localStorage.getItem('sz_viewMode')||'normal';
   const toggleBtn=document.querySelector('.view-toggle');
   if(toggleBtn) toggleBtn.classList.toggle('active',S.viewMode==='compact');
+  
+  // Initialisiere Sabines Daten für KW23 (Juni 2026) - nur wenn noch leer
+  if(S.year===2026&&S.month===6&&Object.keys(S.data).length===0){
+    // Setze Ist-Werte für KW23
+    const sabineData={
+      '2026-06-01':{ist:6.30,status:'',team:undefined,grund:''},
+      '2026-06-02':{ist:6.00,status:'',team:undefined,grund:''},
+      '2026-06-03':{ist:5.75,status:'',team:undefined,grund:''},
+      '2026-06-04':{ist:6.45,status:'',team:1.00,grund:''},
+      '2026-06-05':{ist:5.00,status:'',team:undefined,grund:''}
+    };
+    S.data=sabineData;
+    // Setze Vorbereitung für KW23
+    S.vorb={'2026-W23':1.00};
+    save();
+  }
+  
   rToday();
 }
 load();init();rEvtWidget();
